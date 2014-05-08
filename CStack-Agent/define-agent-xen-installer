@@ -1,0 +1,55 @@
+# Define of agent-xen-installer
+#
+# define-agent-xen-installer
+# 
+#### Variables ###########
+
+# Xen 6.2 Patch
+hotfix_620_url="http://downloadns.citrix.com.edgesuite.net/8736/XS62E014.zip
+http://downloadns.citrix.com.edgesuite.net/8707/XS62ESP1.zip
+http://downloadns.citrix.com.edgesuite.net/9058/XS62ESP1005.zip
+"
+# Xen 6.0.2 Patch
+hotfix_602_url="http://support.citrix.com/servlet/KbServlet/download/33645-102-705635/XS602E021.zip
+http://downloadns.citrix.com.edgesuite.net/8449/XS602E029.zip
+"
+
+fixdir="/root/hotfix"
+extlinux_conf="/boot/extlinux.conf"
+xensource_inv="/etc/xensource-inventory"
+
+# Xen PatchON
+xen_patch_on="ON"
+
+# Install pkgs
+pkgs="tmux nkf vim-enhanced"
+
+# EPEL URL
+epel_gpgkey="http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-5"
+epel_release="http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/5/x86_64/epel-release-5-4.noarch.rpm"
+
+# system
+sysconfig="/etc/sysconfig"
+
+
+#### Functions ###########
+
+# Check memory
+cur_mem(){
+  awk '{print $3}' /proc/xen/balloon | head -1
+}
+
+xen_fix_ver(){
+  case $PRODUCT_VERSION in
+  "6.2.0")
+    echo $hotfix_620_url
+    ;;
+  "6.0.2")
+    echo $hotfix_602_url
+    ;;
+   *)
+    echo "[Failed] Unknown xen version."
+    exit 1
+    ;;
+  esac
+}

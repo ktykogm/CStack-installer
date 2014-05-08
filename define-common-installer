@@ -1,0 +1,44 @@
+# Define common of CloudStack installer.
+
+## Variables ##
+
+domain="tokyo.aiming"
+
+
+## Functions ##
+
+set_idmap(){
+  sed -i.org "s/Domain\ \=.*$/Domain = $domain/" /etc/idmapd.conf
+}
+
+# messages
+msg(){
+  echo
+  echo $@
+  echo
+  sleep 2
+}
+
+cstack_logger(){
+  /bin/logger -t [ClStack-Agent_install] $*
+}
+
+yum_install(){
+  # epel
+  rpm --import $epel_gpgkey
+  rpm -Uvh $epel_release
+  yum update --enablerepo=epel
+  yum install --enablerepo=base,epel -y $@
+}
+
+chk_pkg_and_install(){
+  for chk_pkg in $pkgs
+  do
+    rpm -qa | grep $chk_pkg 1> /dev/null
+    [ $? -eq 1 ] && yum_install $@
+  done
+}
+
+chk_os(){
+  lsb_release -i | awk '{print $3}'
+}
