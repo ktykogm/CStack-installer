@@ -66,7 +66,6 @@ do
   chkconfig $srv on
 done
 
-
 # END OF Xen setup
 # **/
 
@@ -77,11 +76,27 @@ done
 cur_mem > old_mem.log
 
 # dom0_mem 2940M
+
 if [[ $old_mem -lt 3000000 ]];then
-  sed -i.org 's/dom0_mem=752M,max:752M/dom0_mem=2940M,max:2940M/g' $extlinux_conf
   . $xensource_inv
-  staticmax=`xe vm-param-get uuid=$CONTROL_DOMAIN_UUID param-name=memory-static-max`
+
+  case ${PRODUCT_VERSION} in
+    "6.2."*)
+        sed -i.org 's/dom0_mem=752M,max:752M/dom0_mem=2940M,max:2940M/g' $extlinux_conf
+        ;;
+    "6.0."*)
+        sed -i.org 's/dom0_mem=752M/dom0_mem=2940M/g' $extlinux_conf
+        ;;
+    *)
+        echo "[Failed] Unknown XenServer version."
+        cstack_logger "[Failed] XenServer version. No change dom0_mem."
+        exit 10
+        ;;
+  esac
+
+  sync
   echo staticmax=$staticmax
+  staticmax=`xe vm-param-get uuid=$CONTROL_DOMAIN_UUID param-name=memory-static-max`
   xe vm-memory-target-set uuid=$CONTROL_DOMAIN_UUID target=$staticmax
 fi
 
