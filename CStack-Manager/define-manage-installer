@@ -8,30 +8,12 @@ readonly agent2="192.168.20.251"
 ipcheck=$(ip addr | grep "${ipaddress}"|awk '{print $2}')
 ipcheck=${ipcheck%/*}
 # System template URL
-readonly systemp_420_xen_url="http://d21ifhcun6b1t2.cloudfront.net/templates/4.2/systemvmtemplate-2013-07-12-master-xen.vhd.bz2"
+readonly systemp_420_xen_url="http://download.cloud.com/templates/4.2/systemvmtemplate-2013-07-12-master-xen.vhd.bz2"
 readonly systemp_420_kvm_url="http://d21ifhcun6b1t2.cloudfront.net/templates/4.2/systemvmtemplate-2013-06-12-master-kvm.qcow2.bz2 "
 readonly systemp_430_xen_url="http://download.cloud.com/templates/4.3/systemvm64template-2014-01-14-master-xen.vhd.bz2"
 readonly systemp_430_kvm_url="http://download.cloud.com/templates/4.3/systemvm64template-2014-01-14-master-kvm.qcow2.bz2"
-# Secondary Volumes
-readonly mnt_secondary="/mnt/secondary /mnt/secondary2"
 
 ## Functions ##
-
-_confirm(){
-  while true
-  do
-    echo "$@ (y/yes/n/no)"
-    read input
-    case $input in
-      n|no) exit 0
-            ;;
-      y|yes) break
-            ;;
-      *) echo "Please input y or n"
-            ;;
-      esac
-  done
-}
 
 # Cheking type of hypervisor for system template.
 _chk_hypervisor(){
@@ -39,11 +21,11 @@ _chk_hypervisor(){
   do
     echo "What is your version of CloudStack?  (e.g.[4.2.1])"
     read clstack_ver
-    
+
     echo "Do you using hypervisor?"
     echo
     echo "Xen? KVM? (e.g.[Xen])"
-    
+
     read hypervisor
     hypervisor=$(echo $hypervisor | tr '[A-Z]' '[a-z]')
 
@@ -75,9 +57,4 @@ _action_agent(){
     ssh -t $i "$*"
   done
 }
-
-_mk_mntpoint(){
-  mkdir -p $@
-}
-
 

@@ -2,6 +2,16 @@
 
 **面倒なのでInstaller作りました**
 
+## Overview
+
+### Support
+* Orchestra
+ - CloudStack 4.2.1, 4.3.0
+* Manager
+ - CentOS 6.x
+* Agent
+ - Xen 6.0.x, 6.2.x
+
 ## Prepare
 
 * CloudStackのDirごとMaster、Agent それぞれの/root/直下に置きます

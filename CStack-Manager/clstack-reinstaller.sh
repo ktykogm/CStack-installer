@@ -28,7 +28,7 @@ define_common="../define-common-installer"
 } 
 
 # Confirm start.
-_confirm "Do you executing a reinstallation of the Cloudstack?"
+confirm "Do you executing a reinstallation of the Cloudstack? (y/yes/n/no)"
 
 
 echo "Prepare Install"
@@ -65,7 +65,6 @@ msg "Start install of CloudStack master."
 # Create mount point
 echo "Prepare nfs"
 echo
-_mk_mntpoint $mnt_secondary
 
 set_idmap
 
@@ -141,6 +140,9 @@ do
     n="2"
     ;;
  esac
+  [ -d /mnt/primary${n} ] || mkdir -p /mnt/primary${n}
+  [ -d /mnt/secondary${n} ] || mkdir -p /mnt/secondary${n}
+
   mount -t nfs ${i}:/export/secondary${n} /mnt/secondary${n}
 
   echo "Install Sys-template"

@@ -45,6 +45,14 @@ setenforce permissive
 
 
 # NFS
+
+## Prepare dir
+confirm "Is this what Primary storage? (Primary1? Primary2?)[e.g. (1|2|3|4|none)]"
+[ "$bool" == "false" ] || mkdir -p /export/primary$num
+confirm "Is this what Secondary storage? (secondary1? secondary2?)[e.g. (1|2|3|4|none)]"
+[ "$bool" == "false" ] || mkdir -p /export/secondary$num
+
+
 echo 'PMAP_ARGS=""' > ${sysconfig}/portmap
 
 echo -e "RQUOTAD_PORT=875

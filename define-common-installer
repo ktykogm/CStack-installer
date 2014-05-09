@@ -42,3 +42,27 @@ chk_pkg_and_install(){
 chk_os(){
   lsb_release -i | awk '{print $3}'
 }
+
+confirm(){
+  while true
+  do
+    echo "$@"
+    read input
+    case $input in
+      n|no) exit 0 ;;
+      y|yes) break ;;
+      1) num=""
+        break ;;
+      2) num=2
+        break ;;
+      3) num=3
+        break ;;
+      4) num=4
+        break ;;
+      "none") bool="false"
+        break ;;
+      *) echo 'Unknown input'
+        continue ;;
+    esac
+  done
+}
