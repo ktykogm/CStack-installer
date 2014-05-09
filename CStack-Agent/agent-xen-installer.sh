@@ -75,17 +75,17 @@ done
 # tmpfile
 cur_mem > old_mem.log
 
-# dom0_mem 2940M
+# dom0_mem scale up
 
 if [[ $old_mem -lt 3000000 ]];then
   . $xensource_inv
 
   case ${PRODUCT_VERSION} in
     "6.2."*)
-        sed -i.org 's/dom0_mem=752M,max:752M/dom0_mem=2940M,max:2940M/g' $extlinux_conf
+        sed -i.org 's/dom0_mem=${dom0_mem_before_size},max:${dom0_mem_before_size}/dom0_mem=${dom0_mem_after_size},max:${dom0_mem_after_size}/g' $extlinux_conf
         ;;
     "6.0."*)
-        sed -i.org 's/dom0_mem=752M/dom0_mem=2940M/g' $extlinux_conf
+        sed -i.org 's/dom0_mem=${dom0_mem_before_size}/dom0_mem=${dom0_mem_after_size}/g' $extlinux_conf
         ;;
     *)
         echo "[Failed] Unknown XenServer version."

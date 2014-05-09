@@ -14,7 +14,13 @@ hotfix_602_url="http://support.citrix.com/servlet/KbServlet/download/33645-102-7
 http://downloadns.citrix.com.edgesuite.net/8449/XS602E029.zip
 "
 
+# Xen Domain
+dom0_mem_before_size="752M"
+dom0_mem_after_size="2940M"
+
+# system
 fixdir="/root/hotfix"
+sysconfig="/etc/sysconfig"
 extlinux_conf="/boot/extlinux.conf"
 xensource_inv="/etc/xensource-inventory"
 
@@ -28,8 +34,6 @@ pkgs="tmux nkf vim-enhanced"
 epel_gpgkey="http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-5"
 epel_release="http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/5/x86_64/epel-release-5-4.noarch.rpm"
 
-# system
-sysconfig="/etc/sysconfig"
 
 
 #### Functions ###########
